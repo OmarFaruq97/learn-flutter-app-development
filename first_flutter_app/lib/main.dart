@@ -80,9 +80,7 @@ class BrickBreaker extends FlameGame
   );
 
   final rand = math.Random();
-
   double get width => size.x;
-
   double get height => size.y;
 
   @override
@@ -106,8 +104,7 @@ class BrickBreaker extends FlameGame
         velocity: Vector2(
           (rand.nextDouble() - 0.5) * width,
           height * 0.3,
-        ).normalized()
-          ..scale(height / 4),
+        ).normalized()..scale(height / 4),
       ),
     );
 
@@ -120,20 +117,15 @@ class BrickBreaker extends FlameGame
     );
 
     world.addAll([
-    for (var i = 0; i < brickColors.length; i++)
-    for (var j = 1; j <= 6; j++)
-      Brick(
-        Vector2(
-            (i + 0.5) * brickWidth + (i + 1) * brickGutter,
-            (j + 2.0) * brickHeight + j * brickGutter,
-            j < = 3
-        ?brickColors[1]
-            :brickColors[brickColors.length-(i+1)],
-      ),
-    brickColors[i],
-
-
-    ),
+      for (var i = 0; i < brickColors.length; i++)
+        for (var j = 1; j <= 5; j++)
+          Brick(
+            Vector2(
+              (i + 0.5) * brickWidth + (i + 1) * brickGutter,
+              (j + 2.0) * brickHeight + j * brickGutter,
+            ),
+            brickColors[i],
+          ),
     ]);
   }
 
@@ -144,8 +136,10 @@ class BrickBreaker extends FlameGame
   }
 
   @override
-  KeyEventResult onKeyEvent(KeyEvent event,
-      Set<LogicalKeyboardKey> keysPressed,) {
+  KeyEventResult onKeyEvent(
+      KeyEvent event,
+      Set<LogicalKeyboardKey> keysPressed,
+      ) {
     super.onKeyEvent(event, keysPressed);
     switch (event.logicalKey) {
       case LogicalKeyboardKey.space:
@@ -170,7 +164,7 @@ class Ball extends CircleComponent
     radius: radius,
     anchor: Anchor.center,
     paint: Paint()
-      ..color = const Color(0xff921e1e)
+      ..color = const Color(0xff1e6091)
       ..style = PaintingStyle.fill,
     children: [CircleHitbox()],
   );
@@ -185,8 +179,10 @@ class Ball extends CircleComponent
   }
 
   @override
-  void onCollisionStart(Set<Vector2> intersectionPoints,
-      PositionComponent other,) {
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints,
+      PositionComponent other,
+      ) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is PlayArea) {
       if (intersectionPoints.first.y <= 0) {
@@ -293,14 +289,14 @@ class Brick extends RectangleComponent
   );
 
   @override
-  void onCollisionStart(Set<Vector2> intersectionPoints,
-      PositionComponent other,) {
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints,
+      PositionComponent other,
+      ) {
     super.onCollisionStart(intersectionPoints, other);
     removeFromParent();
 
-    if (game.world.children
-        .query<Brick>()
-        .length == 1) {
+    if (game.world.children.query<Brick>().length == 1) {
       game.startGame();
     }
   }
@@ -318,25 +314,25 @@ class PlayArea extends RectangleComponent with HasGameReference<BrickBreaker> {
 
 const brickColors = [
   Color(0xfff94144),
-  Color(0xffe1b8b9),
-  Color(0xff876f70),
-  Color(0xff756c6c),
-  Color(0xff8c8b8b),
-  Color(0xfff94144),
-  Color(0xffe1b8b9),
-  Color(0xff876f70),
-  Color(0xff756c6c),
-  Color(0xff8c8b8b),
+  Color(0xfff3722c),
+  Color(0xfff8961e),
+  Color(0xfff9844a),
+  Color(0xfff9c74f),
+  Color(0xff90be6d),
+  Color(0xff43aa8b),
+  Color(0xff4d908e),
+  Color(0xff277da1),
+  Color(0xff577590),
 ];
 
 const gameWidth = 820.0;
 const gameHeight = 1600.0;
 const ballRadius = gameWidth * 0.02;
-const paddleWidth = gameWidth * 1;
+const paddleWidth = gameWidth * 0.2;
 const paddleHeight = ballRadius * 2;
 const paddleStep = gameWidth * 0.05;
 const brickGutter = gameWidth * 0.015;
 final brickWidth =
-    (gameWidth - (brickGutter * (brickColors.length * 1))) / brickColors.length;
+    (gameWidth - (brickGutter * (brickColors.length + 1))) / brickColors.length;
 const brickHeight = gameHeight * 0.03;
 const difficultyModifier = 1.05;

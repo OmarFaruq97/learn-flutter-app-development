@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(CalculatorApp());
+  runApp(const CalculatorApp());
 }
 
 class CalculatorApp extends StatelessWidget {
@@ -12,7 +12,8 @@ class CalculatorApp extends StatelessWidget {
     return MaterialApp(
       title: 'Basic Calculator',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: CalculatorScreen(),
+      debugShowCheckedModeBanner: false,
+      home: const CalculatorScreen(),
     );
   }
 }
@@ -33,48 +34,62 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   void _buttonPressed(String buttonText) {
     setState(() {
-      if (buttonText == "C") {
+      if (buttonText == "C" || buttonText == "AC") {
         _output = "0";
         _currentInput = "";
         _num1 = 0;
         _num2 = 0;
         _operation = "";
+      } else if (buttonText == "[X]") {
+        if (_currentInput.isNotEmpty) {
+          _currentInput = _currentInput.substring(0, _currentInput.length - 1);
+          _output = _currentInput.isEmpty ? "0" : _currentInput;
+        }
+      } else if (buttonText == ".") {
+        if (!_currentInput.contains(".")) {
+          _currentInput += ".";
+          _output = _currentInput;
+        }
       } else if (buttonText == "+" ||
           buttonText == "-" ||
           buttonText == "*" ||
           buttonText == "÷" ||
-          buttonText == "." ||
-          buttonText == "%" ) {
-        _num1 = double.parse(_currentInput);
-        _operation = buttonText;
-        _currentInput = "";
-        _output = "$_num1 $_operation";
-      } else if (buttonText == "=") {
-        _num2 = double.parse(_currentInput);
-
-        switch (_operation) {
-          case "+":
-            _currentInput = (_num1 + _num2).toString();
-            break;
-          case "-":
-            _currentInput = (_num1 - _num2).toString();
-            break;
-          case "*":
-            _currentInput = (_num1 * _num2).toString();
-            break;
-          case "÷":
-            _currentInput = (_num1 / _num2).toString();
-            break;
-
-          case "%":
-            _currentInput = (_num1 % _num2).toString();
-            break;
+          buttonText == "%") {
+        if (_currentInput.isNotEmpty) {
+          _num1 = double.parse(_currentInput);
+          _operation = buttonText;
+          _currentInput = "";
+          _output = "$_num1 $_operation";
         }
+      } else if (buttonText == "=") {
+        if (_currentInput.isNotEmpty && _operation.isNotEmpty) {
+          _num2 = double.parse(_currentInput);
 
-        _num1 = 0;
-        _num2 = 0;
-        _operation = "";
-        _output = _currentInput;
+          switch (_operation) {
+            case "+":
+              _currentInput = (_num1 + _num2).toString();
+              break;
+            case "-":
+              _currentInput = (_num1 - _num2).toString();
+              break;
+            case "*":
+              _currentInput = (_num1 * _num2).toString();
+              break;
+            case "÷":
+              _currentInput = _num2 != 0
+                  ? (_num1 / _num2).toStringAsFixed(2)
+                  : "Error";
+              break;
+            case "%":
+              _currentInput = (_num1 % _num2).toString();
+              break;
+          }
+
+          _num1 = 0;
+          _num2 = 0;
+          _operation = "";
+          _output = _currentInput;
+        }
       } else {
         _currentInput += buttonText;
         _output = _currentInput;
@@ -94,7 +109,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           onPressed: () => _buttonPressed(buttonText),
           style: ElevatedButton.styleFrom(
             backgroundColor: color,
-            padding: EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(24.0),
           ),
           child: Text(
             buttonText,
@@ -108,20 +123,53 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Basic Calculator')),
+      appBar: AppBar(
+        title: const Text('Basic Calculator'),
+        backgroundColor: Colors.orange,
+      ),
       body: Column(
         children: <Widget>[
           Container(
             alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 24.0,
+              horizontal: 12.0,
+            ),
             child: Text(
               _output,
-              style: TextStyle(fontSize: 90.0, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 60.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          Expanded(child: Divider(thickness: 20,color: Colors.yellow,)),
+          const Divider(thickness: 2, color: Colors.yellow),
           Column(
             children: [
+              Row(
+                children: [
+                  _buildButton(
+                    "AC",
+                    color: Colors.redAccent,
+                    textColor: Colors.white,
+                  ),
+                  _buildButton(
+                    "[X]",
+                    color: Colors.red,
+                    textColor: Colors.white,
+                  ),
+                  _buildButton(
+                    "%",
+                    color: Colors.orange,
+                    textColor: Colors.white,
+                  ),
+                  _buildButton(
+                    ".",
+                    color: Colors.orange,
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
               Row(
                 children: [
                   _buildButton("7"),
@@ -160,29 +208,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               ),
               Row(
                 children: [
+                  _buildButton("0"),
                   _buildButton(
                     "C",
                     color: Colors.brown,
                     textColor: Colors.white,
                   ),
-                  _buildButton("0"),
                   _buildButton(
                     "=",
-                    color: Colors.orange,
+                    color: Colors.green,
                     textColor: Colors.white,
                   ),
-
-                  // _buildButton(
-                  //   ".",
-                  //   color: Colors.orange,
-                  //   textColor: Colors.black,
-                  // ),
-                  _buildButton(
-                    "%",
-                    color: Colors.orange,
-                    textColor: Colors.black,
-                  ),
-
                   _buildButton(
                     "+",
                     color: Colors.orange,

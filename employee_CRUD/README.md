@@ -1,6 +1,6 @@
 # employee_crud
 
-A new Flutter Crdu project.
+A new Flutter Crud project.
 
 ## Getting Started
 

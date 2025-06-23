@@ -42,10 +42,11 @@ class DatabaseService {
     );
   }
 
-
   Future<void> insertEmployee(Employee employee) async {
     final db = await database;
-    await db.insert('employees', employee.toMap(),
+    await db.insert(
+      'employees',
+      employee.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -56,10 +57,13 @@ class DatabaseService {
     return List.generate(maps.length, (i) => Employee.fromMap(maps[i]));
   }
 
-  Future<void> insertStudent(Student student) async{
+  Future<void> insertStudent(Student student) async {
     final db = await database;
-    await db.insert('students', student.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert(
+      'students',
+      student.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<List<Student>> getStudents() async {
@@ -67,6 +71,7 @@ class DatabaseService {
     final maps = await db.query('students');
     return List.generate(maps.length, (i) => Student.fromMap(maps[i]));
   }
+
   Future<void> updateStudent(Student student) async {
     final db = await database;
     await db.update(
@@ -79,11 +84,6 @@ class DatabaseService {
 
   Future<void> deleteStudent(int id) async {
     final db = await database;
-    await db.delete(
-      'students',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    await db.delete('students', where: 'id = ?', whereArgs: [id]);
   }
-
 }

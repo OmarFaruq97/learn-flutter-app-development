@@ -9,7 +9,7 @@ android {
     namespace = "com.org.isdb62.employee_crud"
     compileSdk = flutter.compileSdkVersion
 //    ndkVersion = flutter.ndkVersion
-    ndkVersion = "21.4.7075529"
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

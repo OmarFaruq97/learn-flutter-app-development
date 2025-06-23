@@ -1,3 +1,4 @@
+import 'package:employee_crud/screens/student_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:employee_crud/screens/employee_screen.dart';
 
@@ -7,23 +8,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Employee CRUD App'),
-      ),
+      appBar: AppBar(title: const Text('Employee CRUD App')),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
+              decoration: BoxDecoration(color: Colors.blue),
               child: Text(
                 'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 24),
               ),
             ),
             ListTile(
@@ -32,9 +26,7 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomeScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
                 );
               },
             ),
@@ -57,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const EmployeeScreen(),
+                    builder: (context) => const StudentScreen(),
                   ),
                 );
               },
@@ -65,9 +57,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(
-        child: Text('Welcome to Employee CRUD App!'),
-      ),
+      body: const Center(child: Text('Welcome to Employee CRUD App!')),
     );
   }
 }

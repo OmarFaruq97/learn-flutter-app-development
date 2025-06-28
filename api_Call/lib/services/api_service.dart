@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:api_call/models/Employee.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  // static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String baseUrl = 'http://192.168.0.197:8080';
 
   Future<List<Employee>> getEmployees() async {
     final response = await http.get(Uri.parse('$baseUrl/employee'));
@@ -60,6 +63,28 @@ class ApiService {
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete employee with id $id');
+    }
+  }
+
+  Future<String> uploadImage(int employeeId, File image) async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/employee/$employeeId/upload'),
+    );
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'file',
+        image.path,
+        filename: basename(image.path),
+      ),
+    );
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      final responseBody = await response.stream.bytesToString();
+      final jsonResponse = jsonDecode(responseBody);
+      return jsonResponse['url'];
+    } else {
+      throw Exception('Failed to upload image');
     }
   }
 }

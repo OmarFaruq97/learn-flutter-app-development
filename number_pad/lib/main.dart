@@ -100,14 +100,14 @@ class NumPadCheckout extends StatelessWidget {
         buildRow(["1", "2", "3"]),
         buildRow(["4", "5", "6"]),
         buildRow(["7", "8", "9"]),
-        buildRow(["#", "0", "⌫"], isLastRow: true),
+        buildRow(["*", "0", "⌫"], isLastRow: true),
         const SizedBox(height: 20),
         SizedBox(
           width: width * 2 + 20,
           height: height,
           child: ElevatedButton(
             onPressed: onSubmit,
-            child: const Text("Submit", style: TextStyle(fontSize: 20)),
+            child: const Text("Call", style: TextStyle(fontSize: 20)),
           ),
         ),
       ],

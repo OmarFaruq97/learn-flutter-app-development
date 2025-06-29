@@ -16,7 +16,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Employee Management')),
+      appBar: AppBar(title: const Text('Employee List')),
       body: FutureBuilder<List<Employee>>(
         future: _apiService.getEmployees(),
         builder: (context, snapshot) {
@@ -79,14 +79,17 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddEditEmployeeScreen()),
           ).then((_) => setState(() {}));
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
+        label: const Text('Add Employee'),
+        backgroundColor: Colors.lightGreen,
+        foregroundColor: Colors.blueAccent,
       ),
     );
   }

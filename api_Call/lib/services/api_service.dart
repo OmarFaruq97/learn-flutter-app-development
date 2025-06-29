@@ -11,7 +11,7 @@ class ApiService {
   // static const String baseUrl = 'http://192.168.0.197:8080';
 
   Future<List<Employee>> getEmployees() async {
-    final response = await http.get(Uri.parse('$baseUrl/employee'));
+    final response = await http.get(Uri.parse('$baseUrl/employees'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
@@ -21,20 +21,19 @@ class ApiService {
     }
   }
 
+  //himu copy
   Future<Employee> getEmployeeById(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/employee/$id'));
-
+    final response = await http.get(Uri.parse('$baseUrl/employees/$id'));
     if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonData = jsonDecode(response.body);
-      return Employee.fromJson(jsonData);
+      return Employee.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load employee with id $id');
+      throw Exception('Failed to load employee');
     }
   }
 
   Future<Employee> saveEmployee(Employee employee) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/employee'),
+      Uri.parse('$baseUrl/employees'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(employee.toJson()),
     );
@@ -48,7 +47,7 @@ class ApiService {
 
   Future<Employee> updateEmployee(int id, Employee employee) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/employee/$id'),
+      Uri.parse('$baseUrl/employees/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(employee.toJson()),
     );
@@ -60,7 +59,7 @@ class ApiService {
   }
 
   Future<void> deleteEmployee(int id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/employee/$id'));
+    final response = await http.delete(Uri.parse('$baseUrl/employees/$id'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete employee with id $id');
@@ -70,7 +69,7 @@ class ApiService {
   Future<String> uploadImage(int employeeId, File image) async {
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('$baseUrl/employee/$employeeId/upload'),
+      Uri.parse('$baseUrl/employees/$employeeId/upload'),
     );
     request.files.add(
       await http.MultipartFile.fromPath(

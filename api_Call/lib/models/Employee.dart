@@ -23,15 +23,15 @@ class Employee {
 
   factory Employee.fromJson(Map<String, dynamic> json) {
     return Employee(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      designation: json['designation'],
-      age: json['age'],
-      address: json['address'],
-      dob: json['dob'],
-      salary: (json['salary'] as num).toDouble(),
-      image: json['image'],
+      id: json['id'] as int?,
+      name: json['name'] as String? ?? '',
+      email: json['email'] as String? ?? '',
+      designation: json['designation'] as String? ?? '',
+      age: json['age'] as int? ?? 0,
+      address: json['address'] as String? ?? '',
+      dob: json['dob'] as String? ?? '',
+      salary: (json['salary'] as num?)?.toDouble() ?? 0.0,
+      image: json['image'] as String?,
     );
   }
 

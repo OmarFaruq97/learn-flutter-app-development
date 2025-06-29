@@ -33,11 +33,10 @@ class ApiService {
 
   Future<Employee> saveEmployee(Employee employee) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/employees'),
+      Uri.parse('$baseUrl/employee'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(employee.toJson()),
     );
-
     if (response.statusCode == 200) {
       return Employee.fromJson(jsonDecode(response.body));
     } else {

@@ -136,6 +136,7 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:Colors.tealAccent,
       appBar: AppBar(
         title: Text(widget.employee == null ? 'Add Employee' : 'Edit Employee'),
       ),

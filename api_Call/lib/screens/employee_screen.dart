@@ -16,6 +16,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amberAccent,
       appBar: AppBar(title: const Text('Employee List')),
       body: FutureBuilder<List<Employee>>(
         future: _apiService.getEmployees(),
@@ -86,10 +87,10 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
             MaterialPageRoute(builder: (context) => AddEditEmployeeScreen()),
           ).then((_) => setState(() {}));
         },
-        icon: const Icon(Icons.add),
+        icon: const Icon(Icons.add_box),
         label: const Text('Add Employee'),
-        backgroundColor: Colors.lightGreen,
-        foregroundColor: Colors.blueAccent,
+        backgroundColor: Colors.redAccent,
+        foregroundColor: Colors.black,
       ),
     );
   }

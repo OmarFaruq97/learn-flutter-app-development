@@ -18,7 +18,10 @@ class HomeActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Application"),),
+    return Scaffold(appBar: AppBar(title: Text("Application"),
+    backgroundColor: Colors.amber,
+      foregroundColor: Colors.white70,
+    ),
       body: Text("My Basic Flutter Code"),
     );
   }

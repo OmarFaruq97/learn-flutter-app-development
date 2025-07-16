@@ -9,20 +9,38 @@ class BasicApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomeActivity());
-  }
-}
-
-class HomeActivity extends StatelessWidget {
-  const HomeActivity({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Application"),
-    backgroundColor: Colors.amber,
-      foregroundColor: Colors.white70,
-    ),
-      body: Text("My Basic Flutter Code"),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Basic Application'),
+          centerTitle: true,
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
+        ),
+        body: Center(child: Text('Hello Basic Application')),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(color: Colors.blueAccent),
+                child: Text('Menu'),
+              ),
+              ListTile(title: const Text('Animals')),
+              ListTile(title: const Text('Birds')),
+              ListTile(title: const Text('Human Body')),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

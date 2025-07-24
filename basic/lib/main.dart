@@ -37,6 +37,7 @@ class BasicApp extends StatelessWidget {
               ListTile(title: const Text('Animals')),
               ListTile(title: const Text('Birds')),
               ListTile(title: const Text('Human Body')),
+              ListTile(title: const Text('Home')),
             ],
           ),
         ),
